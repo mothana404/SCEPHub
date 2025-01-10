@@ -70,5 +70,3 @@ SECPhUB is a comprehensive educational platform designed to bridge the gap betwe
 ---
 
 Built with ❤️ for university students and educators
-
-[Add relevant badges, links, and contact information]
