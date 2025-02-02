@@ -1,0 +1,24 @@
+{
+    "development": {
+      "username": "postgres",
+      "password": "359157",
+      "database": "ScepHub",
+      "host": "localhost",
+      "dialect": "postgres"
+    },
+    "test": {
+      "username": "postgres",
+      "password": "359157",
+      "database": "ScepHub",
+      "host": "localhost",
+      "dialect": "postgres"
+    },
+    "production": {
+      "username": "postgres",
+      "password": "359157",
+      "database": "ScepHub",
+      "host": "localhost",
+      "dialect": "postgres"
+    }
+  }
+  
