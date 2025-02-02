@@ -13,7 +13,7 @@ export class Feedback extends Model {
   @Column({ type: DataType.BIGINT, primaryKey: true, autoIncrement: true })
   feedbackId: bigint;
 
-  @Column(DataType.STRING)
+  @Column(DataType.TEXT)
   feedbackParagraph: string;
 
   @ForeignKey(() => Users)

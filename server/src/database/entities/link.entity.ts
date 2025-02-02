@@ -17,7 +17,7 @@ export class Links extends Model {
   @Column({ type: DataType.STRING, allowNull: false })
   link_name: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.TEXT, allowNull: false })
   link: string;
 
   @ForeignKey(() => Students)

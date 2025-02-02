@@ -20,8 +20,8 @@ export class Payments extends Model {
   @Column(DataType.STRING)
   stripe_sub_id: string;
 
-  @Column(DataType.BIGINT)
-  activate: bigint;
+  @Column(DataType.BOOLEAN)
+  activate: boolean;
 
   @BelongsTo(() => Users)
   user: Users;

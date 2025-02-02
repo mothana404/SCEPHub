@@ -64,9 +64,9 @@ SECPHUB is a comprehensive educational platform designed to bridge the gap betwe
 - Platform Usage Analytics
 
 ## 👥 Team
-- Backend Developer - [Mothana-Almajali](https://github.com/abdalhababsah)
+- Backend Developer - [Mothana Almajali](https://github.com/abdalhababsah)
 - FrontEnd Developer - [Bashar Alhoushan](https://github.com/BasharAlhoushan)
-- FrontEnd Developer - [AbdAlrahman-Alhababsah](https://github.com/abdalhababsah)
+- FrontEnd Developer - [AbdAlrahman Alhababsah](https://github.com/abdalhababsah)
 
 ---
 
