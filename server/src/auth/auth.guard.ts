@@ -22,7 +22,6 @@ export class AuthGuard implements CanActivate {
       const response: Response = context.switchToHttp().getResponse();
       const access_token: string = request.cookies['access_token'];
       const refresh_token: string = request.cookies['refresh_token'];
-      //   console.log(request.cookies['refresh_token']);
       try {
         if (!access_token) throw new UnauthorizedException(access_token);
         const userPayload = await this.jwtService.verifyAsync(access_token, {
@@ -35,7 +34,6 @@ export class AuthGuard implements CanActivate {
         request['user'] = user.dataValues;
         return true;
       } catch (error) {
-        // console.log('New Refresh Token');
         if (refresh_token) {
           try {
             const refreshPayload = await this.jwtService.verifyAsync(

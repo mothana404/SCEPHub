@@ -67,6 +67,7 @@ const ViewSubscribedCourse = () => {
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
+        window.scrollTo(0, 0);
         const response = await axios.get(
           `http://localhost:8000/course/coursePage/${courseId}`,
           { withCredentials: true }
@@ -242,11 +243,11 @@ const ViewSubscribedCourse = () => {
                       }
                     >
                       <HiOutlineBookOpen className="w-5 h-5" />
-                      <span>Course Description</span>
+                      <span className="cursor-pointer">Course Description</span>
                     </Tab>
                     <Tab
                       className={({ selected }) =>
-                        `flex items-center space-x-2 py-4 px-6 font-medium text-sm focus:outline-none border-b-2 transition-colors duration-200 ${
+                        `flex items-center cursor-pointer space-x-2 py-4 px-6 font-medium text-sm focus:outline-none border-b-2 transition-colors duration-200 ${
                           selected
                             ? "border-[#041643] text-[#041643] dark:text-white"
                             : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
@@ -254,7 +255,7 @@ const ViewSubscribedCourse = () => {
                       }
                     >
                       <HiOutlineInformationCircle className="w-5 h-5" />
-                      <span>Additional Information</span>
+                      <span className="cursor-pointer">Additional Information</span>
                     </Tab>
                   </TabList>
 

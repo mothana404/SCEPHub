@@ -155,7 +155,7 @@ function Dashboard() {
     tooltip: {
       y: {
         formatter: function (val) {
-          return val + " projects"
+          return val + "%"
         }
       }
     }
@@ -291,7 +291,7 @@ function Dashboard() {
                   <Clock className="text-red-500 w-10 h-10 mb-3" />
                   <h3 className="text-gray-500 dark:text-gray-300 text-sm">Upcoming Deadlines</h3>
                   <p className="text-3xl font-bold text-gray-800 dark:text-white">
-                    {dashboardData.upcomingDeadlines.length}
+                    {dashboardData.awaitProjects}
                   </p>
                 </div>
                 {/* Dropdown Trigger */}

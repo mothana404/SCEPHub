@@ -16,6 +16,7 @@ function ProjectsList() {
     // Fetch categories from the API
     const fetchCategories = async () => {
       try {
+        window.scrollTo(0, 0);
         const response = await axios.get('http://localhost:8000/category', { withCredentials: true });
         if (response.status === 200) {
           setCategories(response.data);

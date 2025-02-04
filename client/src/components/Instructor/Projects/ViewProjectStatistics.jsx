@@ -394,7 +394,7 @@ const ViewProjectStatistics = () => {
                 {/* Charts Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Donut Chart */}
-                    <div className="bg-white dark:bg-gray-800 shadow-md p-6    transition-transform duration-500   hover:shadow-lg animate-fadeIn">
+                    {/* <div className="bg-white dark:bg-gray-800 shadow-md p-6    transition-transform duration-500   hover:shadow-lg animate-fadeIn">
                         <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
                             Application Status Distribution
                         </h2>
@@ -404,7 +404,7 @@ const ViewProjectStatistics = () => {
                             type="donut"
                             height={350}
                         />
-                    </div>
+                    </div> */}
 
                     {/* Bar Chart */}
                     <div className="bg-white dark:bg-gray-800 shadow-md p-6    transition-transform duration-500   hover:shadow-lg animate-fadeIn">

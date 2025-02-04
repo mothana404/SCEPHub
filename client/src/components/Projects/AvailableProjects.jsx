@@ -34,6 +34,7 @@ function AvailableProjects() {
     const fetchData = async () => {
       setLoading(true);
       try {
+        window.scrollTo(0, 0);
         const response = await axios.get(
           `http://localhost:8000/project/allProjects/${'a'}`,
           { withCredentials: true }

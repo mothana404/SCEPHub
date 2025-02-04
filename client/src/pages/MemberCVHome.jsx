@@ -94,19 +94,24 @@ function MemberCVHome() {
                     />
                     <div className="p-4 flex flex-col justify-between">
                       <h3 className="text-xl font-semibold text-gray-800 mb-2">{project.project_name}</h3>
-                      <p className="text-gray-600 mb-4 text-sm">
+                      {/* <p className="text-gray-600 mb-4 text-sm">
                         {project.project_description.length > 80
                             ? `${project.project_description.substring(0, 80)}...`
                             : project.project_description}
-                      </p>
-                      <a
+                      </p> */}
+                      <p class="text-gray-500"
+                         dangerouslySetInnerHTML={{ __html: project.project_description.length > 80
+                            ? project.project_description.slice(0, 80) + '...'
+                            : project.project_description }}
+                        ></p>
+                      {/* <a
                         href={project.project_link}
                         className="inline-flex items-center text-blue-600 hover:text-blue-700"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         View Project <FaExternalLinkAlt className="ml-1" />
-                      </a>
+                      </a> */}
                     </div>
                   </div>
                 ))}

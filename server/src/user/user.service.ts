@@ -913,7 +913,6 @@ import {
               project_id: projectId,
             },
           });
-          // Calculate progress
           const totalTasks = tasks.length;
           const completedTasks = tasks.filter(
             (task) => task.status === 'completed',
@@ -969,7 +968,6 @@ import {
   
     async instructorStatistics(instructorID: string) {
       try {
-        // Fetch the instructor account using the provided instructorID
         const instructorAccount = await this.InstructorModel.findOne({
           where: { instructor_id: instructorID },
         });
@@ -977,7 +975,6 @@ import {
           throw new Error('Instructor not found');
         }
         const instructorId = instructorAccount.id;
-        // 1. Total Courses
         const totalCourses = await this.CourseModel.count({
           where: {
             course_instructor: instructorId,
@@ -985,18 +982,14 @@ import {
           },
         });
   
-        // 2. Active Courses
         const activeCourses = await this.CourseModel.findAll({
           where: {
             course_instructor: instructorId,
             is_deleted: false,
-            // Add additional criteria for "active" courses if applicable
           },
-          // Optionally, include related models or specific attributes
         });
         const activeCoursesCount = activeCourses.length;
   
-        // 3. Completed Projects
         const completedProjects = await this.ProjectModel.findAll({
           where: {
             project_instructor: instructorId,
@@ -1008,7 +1001,6 @@ import {
         });
         const completedProjectsCount = completedProjects.length;
   
-        // 4. Active Projects (Optional: if you need active projects beyond completed)
         const activeProjects = await this.ProjectModel.findAll({
           where: {
             project_instructor: instructorId,
@@ -1018,7 +1010,6 @@ import {
         });
         const activeProjectsCount = activeProjects.length;
   
-        // 5. Upcoming Deadlines (Next 30 days)
         const now = new Date();
         const upcomingDate = new Date();
         upcomingDate.setDate(now.getDate() + 30);
@@ -1034,7 +1025,6 @@ import {
           order: [['end_date', 'ASC']],
         });
   
-        // Existing Statistics (Retained from your original function)
         const endedProjects = await this.ProjectModel.findAll({
           where: {
             project_instructor: instructorId,
@@ -1084,7 +1074,6 @@ import {
   
         const projectStatistics = [];
         for (const project of awaitProjects) {
-          // Fetch tasks for the current project
           const tasks = await this.tasksModel.findAll({
             where: { project_id: project.project_id },
           });

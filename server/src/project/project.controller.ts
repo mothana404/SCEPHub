@@ -218,11 +218,11 @@ export class ProjectController {
     @Req() request: Request,
     @Param('project_id') project_id: string,
     @Query('task_name') task_name?: string,
-    @Query('status') status?: string, // New Query Parameter
+    @Query('status') status?: string,
   ) {
     return await this.projectService.getInstructorWorkSpaceTasks(
       project_id,
-      status, // Pass status to service
+      status,
       task_name,
     );
   }
@@ -236,8 +236,8 @@ export class ProjectController {
   @Get('admin/projectsData')
   async projectsForAdmin(
     @Query('search') search: string = '',
-    @Query('page') page: number = 1, // Default to page 1
-    @Query('limit') limit: number = 7, // Default to limit 5
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 7,
   ) {
     return await this.projectService.projectsForAdmin(search, page, limit);
   }

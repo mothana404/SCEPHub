@@ -24,6 +24,7 @@ function EnrolledProjects() {
     };
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         const fetchProjects = async () => {
             try {
                 const response = await axios.get(

@@ -466,12 +466,12 @@ function ProjectTasks() {
                 </div>
 
                 <div className="relative">
-                    <button
+                    {/* <button
                         onClick={() => setIsCodeEditorOpen(true)}
                         className="fixed bottom-14 right-4 px-4 py-2 bg-purple-600 text-white rounded-full hover:bg-blue-700 shadow-lg flex items-center"
                     >
                         <FaCode className="mr-2" /> Open Code Editor
-                    </button>
+                    </button> */}
 
                     <button
                         onClick={() => setIsChatOpen(true)}

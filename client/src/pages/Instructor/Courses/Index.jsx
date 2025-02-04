@@ -1,11 +1,23 @@
 // src/pages/Instructor/Courses/Index.js
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import CoursesList from '../../../components/Instructor/Courses/CoursesList';
 import DashboardLayout from '../../../components/DashboadLayouts/DashbordLayout';
 import Breadcrumb from '../../../components/Breadcrump';
 
 function Index() {
+
+    // useEffect(() => {
+    //     const fetchCourseData = async () => {
+    //       try {
+    //         window.scrollTo(0, 0);
+    //       } catch (error) {
+    //         console.error("Error ", error);
+    //       }
+    //     };
+    //     fetchCourseData();
+    //   }, []);
+
     return (
         <DashboardLayout>
             <main className=" md:ml-64 h-full bg-meta-2 dark:bg-gray-900 transition-colors duration-300">

@@ -64,6 +64,7 @@ const fetchCourses = async (search = '', selectedCats = []) => {
   setLoading(true);
   setError(null);
   try {
+    window.scrollTo(0, 0);
     const params = { course_name: search };
     
     if (selectedCats.length > 0) {

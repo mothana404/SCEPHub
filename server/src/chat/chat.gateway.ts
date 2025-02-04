@@ -100,7 +100,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       //   console.log('group members =======>> ', groupMembers);
       console.log(senderId);
       groupMembers.forEach((member: UserGroups) => {
-        const userId = member.dataValues.user_id; // Access user_id from dataValues
+        const userId = member.dataValues.user_id;
         const receiverClientId = this.connections.get(userId);
 
         if (receiverClientId) {
@@ -131,7 +131,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   private async getUserIdFromClient(client: Socket) {
-    // console.log(client.handshake.headers);
     const tokenHeader = client.handshake.headers.token;
     if (!tokenHeader) {
       console.log('No token found');

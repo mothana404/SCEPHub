@@ -46,6 +46,7 @@ function EnrolledCourses() {
     const fetchCourses = async () => {
       setLoading(true);
       try {
+        window.scrollTo(0, 0);
         const response = await axios.get('http://localhost:8000/course/enrollmentCourses', {
           withCredentials: true,
         });

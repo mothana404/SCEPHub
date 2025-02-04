@@ -14,6 +14,7 @@ function CoursesList() {
     const [togglingCourseId, setTogglingCourseId] = useState(null);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         fetchCourses();
     }, [search]);
 

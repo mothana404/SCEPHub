@@ -35,7 +35,7 @@ SECPHUB is a comprehensive educational platform designed to bridge the gap betwe
 ### Backend
 - Nest.js
 - Sequelize ORM
-- MySQL Database
+- PostgreSQL Database
 
 ### Authentication & Security
 - JWT (JSON Web Tokens)

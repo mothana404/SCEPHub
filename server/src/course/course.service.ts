@@ -34,15 +34,10 @@ export class CourseService {
   async getAllCourses(courseName?: string, categories?: string[]) {
     try {
       const whereCondition: any = { is_deleted: false };
-
-      // Add course name filtering if provided
       if (courseName) {
         whereCondition.course_name = { [Op.like]: `%${courseName}%` };
       }
-
-      // Add category filtering if provided
       if (categories && categories.length > 0) {
-        // Assuming categories are passed as strings (IDs), convert them to numbers
         const categoryIds = categories
           .map((id) => Number(id))
           .filter((id) => !isNaN(id));
@@ -50,9 +45,8 @@ export class CourseService {
           whereCondition.course_category = { [Op.in]: categoryIds };
         }
       }
-
       const allCourses = await this.CourseModel.findAll({
-        where: whereCondition, // Removed redundant is_deleted: false
+        where: whereCondition,
         include: [
           {
             model: Instructors,
@@ -70,7 +64,6 @@ export class CourseService {
           },
         ],
       });
-
       return allCourses;
     } catch (error) {
       console.error(error);
@@ -87,7 +80,6 @@ export class CourseService {
       const studentSubscription =
         await this.paymentService.getSubscriptionStatus(studentID, role);
       let course_content: any;
-      //   console.log(studentSubscription.status);
       if (studentSubscription.status == 'active') {
         course_content = await this.contentModel.findAll({
           where: {
@@ -145,7 +137,6 @@ export class CourseService {
 
   async activateCourse(courseID: string) {
     try {
-      //   console.log(courseID);
       const theCourse = await this.CourseModel.findByPk(courseID);
       if (theCourse.is_deleted === false) {
         await this.CourseModel.update(
@@ -171,7 +162,6 @@ export class CourseService {
             },
           },
         );
-
         return 'The course activate successfully!';
       }
     } catch (error) {
@@ -564,42 +554,32 @@ export class CourseService {
 
   async getCourseViewStatistics(instructorID: string, courseID: string) {
     try {
-      // Fetch the course by its primary key (courseID)
       const course = await this.CourseModel.findByPk(courseID);
       if (!course) {
         throw new HttpException('Course not found', HttpStatus.NOT_FOUND);
       }
-
-      // Fetch all students enrolled in the course who have paid
       const students = await this.enrollmentsModel.findAll({
         where: {
           course_id: course.course_id,
         },
       });
-
-      // Calculate total earnings (assuming each student pays $4)
       const numberOfStudents = students.length;
       const earnings = numberOfStudents * 4;
 
-      // Define the number of weeks to include in the trend
       const numberOfWeeks = 4;
       const trendData = [];
 
-      // Get today's date
       const today = new Date();
 
       for (let i = numberOfWeeks - 1; i >= 0; i--) {
-        // Calculate the start of the week (Sunday)
         const startOfWeek = new Date(today);
         startOfWeek.setDate(today.getDate() - today.getDay() - i * 7);
-        startOfWeek.setHours(0, 0, 0, 0); // Reset to midnight
+        startOfWeek.setHours(0, 0, 0, 0); 
 
-        // Calculate the end of the week (Saturday)
         const endOfWeek = new Date(startOfWeek);
         endOfWeek.setDate(startOfWeek.getDate() + 6);
-        endOfWeek.setHours(23, 59, 59, 999); // End of day
+        endOfWeek.setHours(23, 59, 59, 999); 
 
-        // Count the number of students registered in this week using createdAt
         const weeklyRegistrations = await this.enrollmentsModel.count({
           where: {
             course_id: course.course_id,
@@ -609,15 +589,13 @@ export class CourseService {
           },
         });
 
-        // Push the data to the trendData array
         trendData.push({
-          weekStart: startOfWeek.toISOString().split('T')[0], // Format: YYYY-MM-DD
+          weekStart: startOfWeek.toISOString().split('T')[0],
           weekEnd: endOfWeek.toISOString().split('T')[0],
           registeredStudents: weeklyRegistrations,
         });
       }
 
-      // Return the statistics along with the trend data
       return {
         earnings,
         trendData,

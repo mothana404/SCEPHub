@@ -106,11 +106,16 @@ function HomeTopCourses() {
                     ? course.course_name.slice(0, 20) + ' ...'
                     : course.course_name}
                 </Link>
-                <p class="overflow-hidden text-sm line-clamp-2">
+                {/* <p class="overflow-hidden text-sm line-clamp-2">
                     {course.course_description.length > 100
                     ? course.course_description.slice(0, 100) + ' ...'
                     : course.course_description}
-                </p>
+                </p> */}
+                <p class="text-gray-500"
+                         dangerouslySetInnerHTML={{ __html: course.course_description.length > 120
+                            ? course.course_description.slice(0, 120) + '...'
+                            : course.course_description }}
+                        ></p>
                 <Link to={`/CourseDetails/${course.course_id}`} class="text-sm font-semibold text-gray-500 hover:text-gray-700">{course.instructor.user.user_name}</Link>
                 <div class="flex flex-col text-gray-700 sm:flex-row">
                 <div class="flex h-fit space-x-2 text-sm font-medium">

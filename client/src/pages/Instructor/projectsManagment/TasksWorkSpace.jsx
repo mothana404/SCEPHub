@@ -405,7 +405,7 @@ function TasksWorkSpace() {
     <DashboardLayout>
       {/* Toast Container for React Toastify */}
       <ToastContainer />
-      <main  className="p-4  md:ml-64 h-full bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-300 ">
+      <main  className="p-4 md:ml-64 h-full bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-300 ">
         <div className="container mx-auto px-4">
           <div className="mb-4">
             <Breadcrumb pageTitle="Joined Projects" />
@@ -699,8 +699,9 @@ function TasksWorkSpace() {
                         </div>
 
                         {/* Description */}
-                        <div className="flex items-start">
-                          <span className="font-semibold w-32">Description:</span>
+                        <div className="">
+                          <span className="font-semibold w-32">Description: </span>
+                          <br />
                           <p className="text-gray-700">
                             {selectedTask.description || 'No Description'}
                           </p>

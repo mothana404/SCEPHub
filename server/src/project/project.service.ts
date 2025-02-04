@@ -89,9 +89,6 @@ export class ProjectService {
           },
         },
       );
-      //   await this.participantsModel.create({
-      //     project_id: newProject.project_id,
-      //   });
       await this.groupsModel.create({
         group_name: createProjectDto.project_name,
         group_project: ProjectGroup.group_id,
@@ -225,7 +222,6 @@ export class ProjectService {
 
   async getProjectDetails(projectID: string) {
     try {
-      // Fetch the project details along with the instructor and category
       const projectDetails = await this.ProjectModel.findOne({
         where: {
           project_id: projectID,
@@ -236,10 +232,10 @@ export class ProjectService {
             include: [
               {
                 model: Users,
-                as: 'user', // Ensure this alias matches your association
+                as: 'user',
               },
             ],
-            as: 'instructor', // Ensure this alias matches your association
+            as: 'instructor',
           },
           {
             model: Categories,
@@ -247,30 +243,28 @@ export class ProjectService {
           },
           {
             model: ProjectParticipants,
-            as: 'participants', // Ensure this alias matches your association
-            where: { accepted: 2 }, // Only include accepted participants
-            required: false, // Allows projects with no accepted participants
+            as: 'participants', 
+            where: { accepted: 2 }, 
+            required: false,
             include: [
               {
                 model: Students,
                 include: [
                   {
                     model: Users,
-                    as: 'user', // Ensure this alias matches your association
+                    as: 'user', 
                   },
                 ],
-                as: 'student', // Ensure this alias matches your association
+                as: 'student', 
               },
             ],
           },
         ],
       });
-
       if (!projectDetails) {
         throw new HttpException('Project not found', HttpStatus.NOT_FOUND);
       }
 
-      // Extract participants from the projectDetails
       const participants = projectDetails.participants.map(
         (participant) => participant.student,
       );
@@ -284,24 +278,23 @@ export class ProjectService {
 
   async getStudentsRequests(projectID: string) {
     try {
-      // Fetch all ProjectParticipants with accepted status '1' (pending) for the given project
       const pendingRequests = await this.participantsModel.findAll({
         where: {
           project_id: projectID,
-          accepted: 1, // 1 => pending
+          accepted: 1, 
         },
         include: [
           {
             model: Students,
-            as: 'student', // Ensure this alias matches your association
+            as: 'student', 
             include: [
               {
                 model: Users,
-                as: 'user', // Ensure this alias matches your association
+                as: 'user', 
               },
               {
                 model: Skills,
-                as: 'skills', // Ensure this alias matches your association
+                as: 'skills', 
               },
             ],
           },
@@ -312,7 +305,6 @@ export class ProjectService {
         return { message: 'No pending requests for this project.' };
       }
 
-      // Extract student profiles from the pending requests
       const studentsProfiles = pendingRequests.map(
         (request) => request.student,
       );
@@ -558,26 +550,20 @@ export class ProjectService {
 
   async getInstructorWorkSpaceTasks(
     project_id: string,
-    status?: string, // New Optional Parameter
+    status?: string,
     task_name?: string,
   ) {
     try {
-      //   console.log(`Project ID: ${project_id}`);
-
-      // Build search condition based on task_name
       const searchCondition = task_name
         ? { title: { [Op.like]: `%${task_name}%` } }
         : {};
 
-      // Initialize where condition with project_id and searchCondition
       const whereCondition: any = {
         project_id: project_id,
         ...searchCondition,
       };
 
-      // If status is provided, add it to the where condition
       if (status) {
-        // Validate status against allowed enum values
         const allowedStatuses = [
           'in_progress',
           'completed',
@@ -594,7 +580,6 @@ export class ProjectService {
         whereCondition.status = status;
       }
 
-      // Fetch tasks from the database with the constructed where condition
       const allTasks = await this.tasksModel.findAll({
         where: whereCondition,
         include: [
@@ -609,7 +594,6 @@ export class ProjectService {
         ],
       });
 
-      // Format the response data
       const formattedData = {
         project_id,
         tasks: allTasks,
@@ -618,7 +602,6 @@ export class ProjectService {
       return formattedData;
     } catch (error) {
       console.error('Error in getInstructorWorkSpaceTasks:', error.message);
-      // If the error is an instance of HttpException, rethrow it
       if (error instanceof HttpException) {
         throw error;
       }
@@ -722,8 +705,8 @@ export class ProjectService {
 
       const { rows, count } = await this.ProjectModel.findAndCountAll({
         where: whereConditions,
-        limit: limit, // Limit number of results
-        offset: offset, // Offset based on page
+        limit: limit, 
+        offset: offset, 
         include: [
           {
             model: Categories,
@@ -741,13 +724,12 @@ export class ProjectService {
           },
           {
             model: ProjectParticipants,
-            required: false, // Optional: include ProjectParticipants, as you want to count them
+            required: false, 
           },
         ],
       });
 
       const projectsWithMemberCounts = rows.map((project) => {
-        // Count the accepted participants
         const acceptedParticipants = project.participants.filter(
           (participant) => participant.accepted === 2,
         );
@@ -809,8 +791,8 @@ export class ProjectService {
       if (!instructorProject) {
         throw new HttpException('Project not found', HttpStatus.NOT_FOUND);
       }
-
-      // Fetch all tasks and categorize by status
+  
+      // Get task counts
       const tasks = await this.tasksModel.findAll({
         where: { project_id: instructorProject.project_id },
         attributes: [
@@ -819,13 +801,22 @@ export class ProjectService {
         ],
         group: ['status'],
       });
-
-      const taskCounts = tasks.reduce((acc, task) => {
-        acc[task.status] = task.dataValues.count;
-        return acc;
-      }, {});
-
-      // Fetch all participants and categorize by acceptance status
+  
+      const taskCounts = {
+        total: 0,
+        in_progress: 0,
+        completed: 0,
+        pending_approval: 0,
+      };
+  
+      tasks.forEach((task) => {
+        const status = task.getDataValue('status') as keyof typeof taskCounts;
+        const count = Number(task.getDataValue('count'));
+        taskCounts[status] = count;
+        taskCounts.total += count;
+      });
+  
+      // Get participant counts
       const participants = await this.participantsModel.findAll({
         where: { project_id: instructorProject.project_id },
         attributes: [
@@ -834,25 +825,30 @@ export class ProjectService {
         ],
         group: ['accepted'],
       });
-      //   console.log(participants);
-      const participantCounts = participants.reduce((acc, participant) => {
-        acc[participant.accepted] = participant.dataValues.count;
-        return acc;
-      }, {});
-
-      //   console.log(participantCounts[1]);
+  
+      const participantCounts = {
+        pending: 0,
+        accepted: 0,
+        rejected: 0,
+      };
+  
+      participants.forEach((participant) => {
+        const accepted = participant.getDataValue('accepted');
+        const count = Number(participant.getDataValue('count'));
+  
+        if (accepted === 1) participantCounts.pending = count;
+        else if (accepted === 2) participantCounts.accepted = count;
+        else if (accepted === 3) participantCounts.rejected = count;
+      });
+  
       return {
-        numberOfAllTasks:
-          Object.values(taskCounts).reduce(
-            (a, b) => (a as number) + (b as number),
-            0,
-          ) || 0,
-        numberOfPendingTasks: taskCounts['pending_approval'] || 0,
-        numberOfCompletedTasks: taskCounts['completed'] || 0,
-        numberOfInProgressTasks: taskCounts['in_progress'] || 0,
-        numberOfPendingStudents: participantCounts[1] || 0,
-        numberOfRejectedStudents: participantCounts[3] || 0,
-        numberOfAcceptedStudents: participantCounts[2] || 0,
+        numberOfAllTasks: taskCounts.total,
+        numberOfPendingTasks: taskCounts.pending_approval,
+        numberOfCompletedTasks: taskCounts.completed,
+        numberOfInProgressTasks: taskCounts.in_progress,
+        numberOfPendingStudents: participantCounts.pending,
+        numberOfAcceptedStudents: participantCounts.accepted,
+        numberOfRejectedStudents: participantCounts.rejected,
       };
     } catch (error) {
       console.error(error);

@@ -13,6 +13,7 @@ function ProjectManagement() {
     const fetchProjects = async () => {
       try {
         // Fetch projects
+        window.scrollTo(0, 0);
         const projectResponse = await axios.get(
           "http://localhost:8000/project/instructorWorkSpace",
           { withCredentials: true }

@@ -23,19 +23,19 @@ const ProjectInformation = () => {
         setTeamMembers(participants);
 
         // Ensure required_skills is a string
-        let parsedSkills = projectDetails.required_skills;
-        let skills;
+        // let parsedSkills = projectDetails.required_skills;
+        // let skills;
 
-        try {
-          skills = JSON.parse(parsedSkills);
-          if (typeof skills === "string") {
-            skills = JSON.parse(skills);
-          }
-        } catch (error) {
-          skills = parsedSkills.split(",").map((skill) => skill.trim());
-        }
-
-        setProjectSkills(skills);
+        // try {
+        //   skills = JSON.parse(parsedSkills);
+        //   if (typeof skills === "string") {
+        //     skills = JSON.parse(skills);
+        //   }
+        // } catch (error) {
+        //   skills = parsedSkills.split(",").map((skill) => skill.trim());
+        // }
+        console.log(projectDetails.required_skills);
+        setProjectSkills(projectDetails.required_skills);
       } catch (error) {
         console.error("Error fetching project details:", error);
       }
@@ -112,7 +112,7 @@ const ProjectInformation = () => {
               </div>
 
               <div className="relative">
-                <span className="absolute -left-6 w-8 h-8 bg-indigo-500 text-white text-center rounded-full">
+                <span className="absolute -left-6 w-8 h-8 bg-indigo-500 text-white text-center rounded-full flex items-center justify-center">
                   2
                 </span>
                 <h2 className="text-2xl ml-8 font-bold text-gray-800 dark:text-white mb-2">
@@ -125,7 +125,7 @@ const ProjectInformation = () => {
                 </ul>
               </div>
               <div className="relative">
-                <span className="absolute -left-6 w-8 h-8 bg-indigo-500 text-white text-center rounded-full">
+                <span className="absolute -left-6 w-8 h-8 bg-indigo-500 text-white text-center rounded-full flex items-center justify-center">
                   3
                 </span>
                 <h2 className="text-2xl font-bold text-gray-800 ml-8 dark:text-white mb-2">
@@ -158,8 +158,8 @@ const ProjectInformation = () => {
               <div className="flex items-center space-x-4">
                 <div className="w-20 h-20 rounded-full bg-gray-300 flex-shrink-0">
                   <img
-                    src="https://via.placeholder.com/80"
-                    alt="Instructor"
+                    src={project.instructor.user.user_img}
+                    alt={project.instructor.user.user_img}
                     className="w-full h-full object-cover rounded-full"
                   />
                 </div>
@@ -190,8 +190,8 @@ const ProjectInformation = () => {
                   className="min-w-[200px] bg-white dark:bg-gray-700 p-4  shadow-lg hover:scale-105 transition transform"
                 >
                   <img
-                    src="https://via.placeholder.com/80"
-                    alt={member.name}
+                    src={member.user.user_img}
+                    alt={member.user.user_img}
                     className="w-16 h-16 mx-auto rounded-full"
                   />
                   <h3 className="text-lg font-medium text-center mt-4 text-gray-800 dark:text-white">

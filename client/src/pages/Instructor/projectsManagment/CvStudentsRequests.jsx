@@ -105,8 +105,10 @@ function CvStudentsRequests() {
                                         <div className="p-4">
                                             <h3 className="text-lg font-semibold">{project.project_name}</h3>
                                             <p className="text-gray-600 text-sm">
-                                                {project.project_description?.replace(/<\/?[^>]+(>|$)/g, '') ||
-                                                    'No description available.'}
+                                            {project.project_description
+                                                ? project.project_description.replace(/<\/?[^>]+(>|$)/g, '').slice(0, 150) + 
+                                                (project.project_description.length > 150 ? '...' : '')
+                                                : 'No description available.'}
                                             </p>
                                         </div>
                                     </div>

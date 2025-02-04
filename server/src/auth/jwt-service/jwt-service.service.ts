@@ -14,7 +14,7 @@ export class Jwtservice {
       { user_id, user_email, role },
       {
         secret: process.env.SECRET_KEY,
-        expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN, // shorter expiration
+        expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN,
       },
     );
     return access_token;
@@ -28,8 +28,8 @@ export class Jwtservice {
     const refresh_token = await this.jwtService.signAsync(
       { user_id, user_email, role },
       {
-        secret: process.env.REFRESH_SECRET_KEY, // separate secret for refresh tokens
-        expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN, // longer expiration
+        secret: process.env.REFRESH_SECRET_KEY,
+        expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN,
       },
     );
     return refresh_token;
